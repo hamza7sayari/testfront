@@ -1,0 +1,69 @@
+<h1 *ngIf="isAddMode">Add Candidature</h1>
+<h1 *ngIf="!isAddMode">Edit  Candidature</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="first_name">First Name</label>
+      <input type="text" formControlName="first_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" />
+      <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+        <div *ngIf="f.first_name.errors.required">First Name is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label for="last_name">Last Name</label>
+      <input type="text" formControlName="last_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" />
+      <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+        <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label for="email">email</label>
+      <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="phone_number">phone number</label>
+      <input type="text" formControlName="phone_number" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }" />
+      <div *ngIf="submitted && f.phone_number.errors" class="invalid-feedback">
+        <div *ngIf="f.phone_number.errors.required">phone_number is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+
+      <select formControlName="application_status">
+        <option *ngFor="let state of options" [ngValue]="state">
+          {{ state }}
+        </option>
+      </select>
+
+      <label for="application_status">application status</label>
+<!--      <input type="text" formControlName="application_status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.application_status.errors }" />-->
+      <div *ngIf="submitted && f.application_status.errors" class="invalid-feedback">
+        <div *ngIf="f.application_status.errors.required">application status is required</div>
+      </div>
+    </div>
+
+    <div class="form-group col">
+      <label for="curriculum_vitae">curriculum_vitae</label>
+      <input
+        type="file"
+        formControlName="curriculum_vitae" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.curriculum_vitae.errors }"
+        (change)="onFileChange($event)">
+      <div *ngIf="f.curriculum_vitae.touched && f.curriculum_vitae.invalid" class="alert alert-danger">
+        <div *ngIf="f.curriculum_vitae.errors.required">File is required.</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Save
+    </button>
+    <a routerLink="/candidates" class="btn btn-link">Cancel</a>
+  </div>
+</form>

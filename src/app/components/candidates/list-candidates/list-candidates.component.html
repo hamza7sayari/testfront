@@ -1,0 +1,43 @@
+<h1>Candidates</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Candidate</a>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th style="width: 30%">First Name</th>
+    <th style="width: 30%">Last Name</th>
+    <th style="width: 30%">TEL</th>
+    <th style="width: 30%">Email Status</th>
+    <th style="width: 30%">Candidacy Status</th>
+    <th style="width: 10%"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let can of candidates">
+    <!--    {{candidates|json}}-->
+    <!--    {{can|json}}-->
+    <td>{{can.first_name}}</td>
+    <td>{{can.last_name}}</td>
+    <td>{{can.phone_number}}</td>
+    <td>{{can.message}}</td>
+    <td>{{can.application_status}}</td>
+    <td><a href="{{can.curriculum_vitae}}"> Cv</a></td>
+
+    <td style="white-space: nowrap">
+      <a routerLink="edit/{{can.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+      <!--      <app-edit a="can"></app-edit>-->
+      {{can.id|json}}
+      {{"can.id"|json}}
+      <button (click)="deleteCandidate(can.id)" class="btn btn-sm btn-danger btn-delete-user"
+              [disabled]="can.isDeleting">
+        <span *ngIf="can.isDeleting" class="spinner-border spinner-border-sm"></span>
+        <span *ngIf="!can.isDeleting">Delete</span>
+      </button>
+    </td>
+  </tr>
+  <tr *ngIf="!candidates">
+    <td colspan="4" class="text-center">
+      <span class="spinner-border spinner-border-lg align-center"></span>
+    </td>
+  </tr>
+  </tbody>
+</table>
